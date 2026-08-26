@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
+import { Inter_Tight } from "next/font/google";
 import "./globals.css";
+
+const interTight = Inter_Tight({
+  subsets: ["latin"],
+  variable: "--font-inter-tight",
+  weight: ["400", "500", "600", "700", "800"]
+});
 
 export const metadata: Metadata = {
   title: "Daniel Gavan Dashboard",
@@ -13,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={interTight.variable}>{children}</body>
     </html>
   );
 }
