@@ -1,3 +1,17 @@
+-- Generated from lib/mock-data.ts by scripts/generate-supabase-seed.mjs.
+-- Run: pnpm supabase:seed:generate
+
+insert into public.integration_sources (slug, display_name, status, auth_type) values
+  ('hubspot', 'HubSpot', 'ready_for_credentials', 'private_app_or_oauth2'),
+  ('myob', 'MYOB', 'ready_for_oauth', 'oauth2'),
+  ('keap', 'Keep', 'ready_for_oauth', 'oauth2'),
+  ('monday', 'Monday.com', 'ready_for_api_token', 'api_token_or_oauth2')
+on conflict (slug) do update set
+  display_name = excluded.display_name,
+  status = excluded.status,
+  auth_type = excluded.auth_type,
+  updated_at = now();
+
 insert into public.consultants (id, full_name, initials, role, revenue_target) values
   ('dg', 'Daniel Gavan', 'DG', 'Principal', 398000),
   ('at', 'Andrew Taylor', 'AT', 'Senior Consultant', 300000),
@@ -67,35 +81,6 @@ insert into public.contacts (id, company_id, owner_id, first_name, last_name, ti
 on conflict (id) do update set company_id = excluded.company_id, owner_id = excluded.owner_id, first_name = excluded.first_name, last_name = excluded.last_name, title = excluded.title, email = excluded.email, last_activity_days = excluded.last_activity_days;
 
 insert into public.deals (id, company_id, contact_id, stage_id, value, proposal_date, expected_close_date, close_date, last_comms_date, source, deal_type, status, term, loss_reason, loss_review_done, loss_reviewer, loss_comments) values
-  ('d1', 'meridian', 'janet', 'awaiting', 420000, '2026-04-12', '2026-05-28', null, '2026-06-02', 'LinkedIn (Organic)', 'Leadership Development', 'open', null, null, null, null, null),
-  ('d2', 'apex', 'robert', 'awaiting', 385000, '2026-04-15', '2026-05-30', null, '2026-06-01', 'Website form', 'Executive Coaching', 'open', null, null, null, null, null),
-  ('d3', 'brightford', 'tom', 'awaiting', 312000, '2026-04-18', '2026-05-24', null, '2026-05-28', 'Referral · Partner', 'High Performance Culture', 'open', null, null, null, null, null),
-  ('d4', 'harborline', 'mark', 'planning', 285000, '2026-04-20', '2026-06-14', null, '2026-06-03', 'Website form', 'High Performance Culture', 'open', null, null, null, null, null),
-  ('d5', 'northbridge', 'hugh', 'planning', 264000, '2026-04-22', '2026-06-18', null, '2026-05-30', 'Direct (Inbound)', 'Culture sprint', 'open', null, null, null, null, null),
-  ('d6', 'stratton', 'jamesliu', 'planning', 240000, '2026-04-25', '2026-06-10', null, '2026-06-04', 'Event · Speaking', 'Leadership Development', 'open', null, null, null, null, null),
-  ('d7', 'catalyst', 'sophie', 'planning', 218000, '2026-04-26', '2026-06-06', null, '2026-05-29', 'Website form', 'Organisational Performance', 'open', null, null, null, null, null),
-  ('d8', 'pennifold', 'peter', 'proposal', 385000, '2026-05-02', '2026-06-28', null, '2026-05-27', 'Referral · Partner', 'Strategy offsite', 'open', null, null, null, null, null),
-  ('d9', 'wilshire', 'tom', 'proposal', 324000, '2026-05-04', '2026-06-20', null, '2026-05-26', 'LinkedIn (Organic)', 'Diagnostic', 'open', null, null, null, null, null),
-  ('d10', 'clearwater', 'peter', 'proposal', 285000, '2026-05-06', '2026-06-30', null, '2026-05-25', 'Direct (Inbound)', 'Workshop series', 'open', null, null, null, null, null),
-  ('d11', 'aureus', 'david', 'identified', 172000, null, '2026-07-30', null, '2026-05-18', 'Content · Download', 'Diagnostic prepaid', 'open', null, null, null, null, null),
-  ('d12', 'raven', 'olivia', 'won', 340000, '2026-04-18', '2026-06-23', '2026-05-22', '2026-06-03', 'Referral · Partner', 'Exec Programme', 'won', '12-month programme', null, null, null, null),
-  ('d13', 'kingsford', 'robert', 'won', 264000, '2026-04-12', '2026-05-20', '2026-05-09', '2026-05-26', 'Website form', 'Diagnostic phase', 'won', '9-month programme', null, null, null, null),
-  ('d14', 'caversham', 'olivia', 'won', 198000, '2026-04-08', '2026-05-12', '2026-05-02', '2026-05-18', 'Event · AHRI', 'Advisory retainer', 'won', '4-month diagnostic', null, null, null, null),
-  ('d15', 'cordell', 'danielokafor', 'proposal', 187000, '2026-03-14', '2026-05-02', '2026-03-14', '2026-04-08', 'Direct (Inbound)', 'Organisational Performance', 'lost', null, 'Lost to incumbent', true, 'AT', 'Incumbent discounted 30% at final stage'),
-  ('d16', 'norwood', 'danielokafor', 'identified', 62000, null, '2026-05-02', '2026-05-02', '2026-04-18', 'Website form', 'Leadership Development', 'lost', null, 'No decision', false, null, 'Sponsor departed; no replacement')
-on conflict (id) do update set company_id = excluded.company_id, contact_id = excluded.contact_id, stage_id = excluded.stage_id, value = excluded.value, proposal_date = excluded.proposal_date, expected_close_date = excluded.expected_close_date, close_date = excluded.close_date, last_comms_date = excluded.last_comms_date, source = excluded.source, deal_type = excluded.deal_type, status = excluded.status, term = excluded.term, loss_reason = excluded.loss_reason, loss_review_done = excluded.loss_review_done, loss_reviewer = excluded.loss_reviewer, loss_comments = excluded.loss_comments;
-
-insert into public.deal_consultants (deal_id, consultant_id) values
-  ('d1', 'dg'), ('d1', 'at'), ('d2', 'dg'), ('d2', 'sc'), ('d3', 'at'), ('d3', 'ps'),
-  ('d4', 'dg'), ('d4', 'mo'), ('d5', 'sc'), ('d5', 'ew'), ('d6', 'dg'), ('d6', 'jh'),
-  ('d7', 'at'), ('d7', 'nr'), ('d8', 'dg'), ('d8', 'sc'), ('d9', 'at'), ('d9', 'mw'),
-  ('d10', 'mo'), ('d10', 'ob'), ('d11', 'dg'), ('d11', 'ip'),
-  ('d12', 'dg'), ('d12', 'at'), ('d13', 'dg'), ('d13', 'mo'), ('d14', 'at'), ('d14', 'ps'),
-  ('d15', 'dg'), ('d16', 'rm')
-on conflict do nothing;
-
--- FY26 annual deals (Jul 2025 - Jun 2026), generated from lib/mock-data.ts monthlyDealSeeds
-insert into public.deals (id, company_id, contact_id, stage_id, value, proposal_date, expected_close_date, close_date, last_comms_date, source, deal_type, status, term, loss_reason, loss_review_done, loss_reviewer, loss_comments) values
   ('fy26-jul25-1', 'coverdale', 'tom', 'won', 318000, '2025-07-10', '2025-07-28', '2025-07-20', '2025-07-25', 'Website form', 'Leadership 360', 'won', '12-month programme', null, null, null, null),
   ('fy26-jul25-2', 'harborline', 'mark', 'proposal', 145000, '2025-07-15', '2025-07-28', null, '2025-07-28', 'LinkedIn (Organic)', 'High Performance Culture', 'open', null, null, null, null, null),
   ('fy26-jul25-3', 'aureus', 'david', 'lost', 72000, '2025-07-20', '2025-07-28', '2025-07-26', '2025-07-28', 'Content · Download', 'Diagnostic', 'lost', null, 'Budget deferred', true, 'IP', 'winter reset; post-loss follow-up required'),
@@ -131,8 +116,26 @@ insert into public.deals (id, company_id, contact_id, stage_id, value, proposal_
   ('fy26-may26-3', 'northbridge', 'hugh', 'planning', 264000, '2026-05-20', '2026-05-28', null, '2026-05-28', 'Direct (Inbound)', 'Culture sprint', 'open', null, null, null, null, null),
   ('fy26-jun26-1', 'meridian', 'janet', 'awaiting', 420000, '2026-06-10', '2026-06-28', null, '2026-06-25', 'LinkedIn (Organic)', 'Leadership Development', 'open', null, null, null, null, null),
   ('fy26-jun26-2', 'apex', 'robert', 'awaiting', 385000, '2026-06-15', '2026-06-28', null, '2026-06-28', 'Website form', 'Executive Coaching', 'open', null, null, null, null, null),
-  ('fy26-jun26-3', 'harborline', 'mark', 'planning', 285000, '2026-06-20', '2026-06-28', null, '2026-06-28', 'Website form', 'High Performance Culture', 'open', null, null, null, null, null)
+  ('fy26-jun26-3', 'harborline', 'mark', 'planning', 285000, '2026-06-20', '2026-06-28', null, '2026-06-28', 'Website form', 'High Performance Culture', 'open', null, null, null, null, null),
+  ('d1', 'meridian', 'janet', 'awaiting', 420000, '2026-04-12', '2026-05-28', null, '2026-06-02', 'LinkedIn (Organic)', 'Leadership Development', 'open', null, null, null, null, null),
+  ('d2', 'apex', 'robert', 'awaiting', 385000, '2026-04-15', '2026-05-30', null, '2026-06-01', 'Website form', 'Executive Coaching', 'open', null, null, null, null, null),
+  ('d3', 'brightford', 'tom', 'awaiting', 312000, '2026-04-18', '2026-05-24', null, '2026-05-28', 'Referral · Partner', 'High Performance Culture', 'open', null, null, null, null, null),
+  ('d4', 'harborline', 'mark', 'planning', 285000, '2026-04-20', '2026-06-14', null, '2026-06-03', 'Website form', 'High Performance Culture', 'open', null, null, null, null, null),
+  ('d5', 'northbridge', 'hugh', 'planning', 264000, '2026-04-22', '2026-06-18', null, '2026-05-30', 'Direct (Inbound)', 'Culture sprint', 'open', null, null, null, null, null),
+  ('d6', 'stratton', 'jamesliu', 'planning', 240000, '2026-04-25', '2026-06-10', null, '2026-06-04', 'Event · Speaking', 'Leadership Development', 'open', null, null, null, null, null),
+  ('d7', 'catalyst', 'sophie', 'planning', 218000, '2026-04-26', '2026-06-06', null, '2026-05-29', 'Website form', 'Organisational Performance', 'open', null, null, null, null, null),
+  ('d8', 'pennifold', 'peter', 'proposal', 385000, '2026-05-02', '2026-06-28', null, '2026-05-27', 'Referral · Partner', 'Strategy offsite', 'open', null, null, null, null, null),
+  ('d9', 'wilshire', 'tom', 'proposal', 324000, '2026-05-04', '2026-06-20', null, '2026-05-26', 'LinkedIn (Organic)', 'Diagnostic', 'open', null, null, null, null, null),
+  ('d10', 'clearwater', 'peter', 'proposal', 285000, '2026-05-06', '2026-06-30', null, '2026-05-25', 'Direct (Inbound)', 'Workshop series', 'open', null, null, null, null, null),
+  ('d11', 'aureus', 'david', 'identified', 172000, null, '2026-07-30', null, '2026-05-18', 'Content · Download', 'Diagnostic prepaid', 'open', null, null, null, null, null),
+  ('d12', 'raven', 'olivia', 'won', 340000, '2026-04-18', '2026-06-23', '2026-05-22', '2026-06-03', 'Referral · Partner', 'Exec Programme', 'won', '12-month programme', null, null, null, null),
+  ('d13', 'kingsford', 'robert', 'won', 264000, '2026-04-12', '2026-05-20', '2026-05-09', '2026-05-26', 'Website form', 'Diagnostic phase', 'won', '9-month programme', null, null, null, null),
+  ('d14', 'caversham', 'olivia', 'won', 198000, '2026-04-08', '2026-05-12', '2026-05-02', '2026-05-18', 'Event · AHRI', 'Advisory retainer', 'won', '4-month diagnostic', null, null, null, null),
+  ('d15', 'cordell', 'danielokafor', 'proposal', 187000, '2026-03-14', '2026-05-02', '2026-03-14', '2026-04-08', 'Direct (Inbound)', 'Organisational Performance', 'lost', null, 'Lost to incumbent', true, 'AT', 'Incumbent discounted 30% at final stage'),
+  ('d16', 'norwood', 'danielokafor', 'identified', 62000, null, '2026-05-02', '2026-05-02', '2026-04-18', 'Website form', 'Leadership Development', 'lost', null, 'No decision', false, null, 'Sponsor departed; no replacement')
 on conflict (id) do update set company_id = excluded.company_id, contact_id = excluded.contact_id, stage_id = excluded.stage_id, value = excluded.value, proposal_date = excluded.proposal_date, expected_close_date = excluded.expected_close_date, close_date = excluded.close_date, last_comms_date = excluded.last_comms_date, source = excluded.source, deal_type = excluded.deal_type, status = excluded.status, term = excluded.term, loss_reason = excluded.loss_reason, loss_review_done = excluded.loss_review_done, loss_reviewer = excluded.loss_reviewer, loss_comments = excluded.loss_comments;
+
+delete from public.deal_consultants;
 
 insert into public.deal_consultants (deal_id, consultant_id) values
   ('fy26-jul25-1', 'at'),
@@ -188,7 +191,37 @@ insert into public.deal_consultants (deal_id, consultant_id) values
   ('fy26-jun26-2', 'dg'),
   ('fy26-jun26-2', 'sc'),
   ('fy26-jun26-3', 'dg'),
-  ('fy26-jun26-3', 'mo')
+  ('fy26-jun26-3', 'mo'),
+  ('d1', 'dg'),
+  ('d1', 'at'),
+  ('d2', 'dg'),
+  ('d2', 'sc'),
+  ('d3', 'at'),
+  ('d3', 'ps'),
+  ('d4', 'dg'),
+  ('d4', 'mo'),
+  ('d5', 'sc'),
+  ('d5', 'ew'),
+  ('d6', 'dg'),
+  ('d6', 'jh'),
+  ('d7', 'at'),
+  ('d7', 'nr'),
+  ('d8', 'dg'),
+  ('d8', 'sc'),
+  ('d9', 'at'),
+  ('d9', 'mw'),
+  ('d10', 'mo'),
+  ('d10', 'ob'),
+  ('d11', 'dg'),
+  ('d11', 'ip'),
+  ('d12', 'dg'),
+  ('d12', 'at'),
+  ('d13', 'dg'),
+  ('d13', 'mo'),
+  ('d14', 'at'),
+  ('d14', 'ps'),
+  ('d15', 'dg'),
+  ('d16', 'rm')
 on conflict do nothing;
 
 insert into public.projects (id, deal_id, project_name, progress_pct, rag_status, next_milestone, lead_consultant_id, start_date, margin_pct) values
@@ -196,30 +229,19 @@ insert into public.projects (id, deal_id, project_name, progress_pct, rag_status
   ('p2', 'd4', 'Harborline · Group Exec Programme', 72, 'Green', 'Module 7 launch', 'dg', '2026-06-17', 71),
   ('p3', 'd5', 'Marrendale · Banking Offsite', 60, 'Green', 'Milestone 4 due 14 Jun', 'dg', '2026-06-24', 64),
   ('p4', 'd2', 'Apturra Software · Engineering Leaders', 40, 'Amber', 'Discovery sprint · wk 1', 'at', '2026-06-03', 58),
-  ('p5', 'd6', 'Stonehaven Mutual · Executive Coaching', 25, 'Red', 'Milestone 2 overdue 12 days', 'at', '2026-06-03', 42)
+  ('p5', 'd7', 'Stonehaven Mutual · Executive Coaching', 25, 'Red', 'Milestone 2 overdue 12 days', 'at', '2026-06-03', 42),
+  ('p6', 'd6', 'Realto Media Group · 360 Rollout', 92, 'Green', 'Milestone 9 due 07 May', 'jh', '2026-06-15', 73)
 on conflict (id) do update set deal_id = excluded.deal_id, project_name = excluded.project_name, progress_pct = excluded.progress_pct, rag_status = excluded.rag_status, next_milestone = excluded.next_milestone, lead_consultant_id = excluded.lead_consultant_id, start_date = excluded.start_date, margin_pct = excluded.margin_pct;
 
 delete from public.project_milestones;
+
 insert into public.project_milestones (project_id, title, due_label, status) values
   ('p2', 'Harborline · Module 7 launch', 'Mon', 'ready'),
   ('p3', 'Telvana · Survey close', 'Wed', 'on'),
-  ('p5', 'Stonehaven Mutual · Recovery call', 'Fri', 'urgent');
+  ('p6', 'Realto · Final reports', 'Thu', 'draft'),
+  ('p5', 'Stonehaven Mutual · Recovery call', 'Fri', 'urgent')
+on conflict do nothing;
 
-insert into public.invoices (id, company_id, consultant_id, engagement, amount, issued_date, due_date, status, timing_label) values
-  ('i1', 'northbridge', 'sc', 'Culture sprint', 96000, '2026-04-18', '2026-05-18', 'Overdue', '20d overdue'),
-  ('i2', 'catalyst', 'at', 'Leadership 360', 72000, '2026-04-26', '2026-05-26', 'Overdue', '12d overdue'),
-  ('i3', 'clearwater', 'ob', 'Workshop series', 38000, '2026-04-22', '2026-05-22', 'Overdue', '16d overdue'),
-  ('i4', 'kingsford', 'dg', 'Diagnostic phase', 48000, '2026-05-02', '2026-06-01', 'Overdue', '6d overdue'),
-  ('i5', 'pennifold', 'mo', 'Strategy offsite', 64000, '2026-05-10', '2026-06-09', 'Outstanding', 'due in 2d'),
-  ('i6', 'raven', 'dg', 'Exec programme · M1', 85000, '2026-05-24', '2026-06-23', 'Outstanding', 'due in 16d'),
-  ('i7', 'harborline', 'mo', 'Mobilisation', 44000, '2026-05-28', '2026-06-27', 'Outstanding', 'due in 20d'),
-  ('i8', 'meridian', 'dg', 'Mobilisation', 40000, '2026-05-28', '2026-06-27', 'Outstanding', 'due in 20d'),
-  ('i9', 'whitestone', 'sc', 'Leadership offsite', 42000, '2026-04-28', '2026-05-28', 'Paid', 'paid 26 May'),
-  ('i10', 'caversham', 'at', 'Phase 1 · complete', 52000, null, null, 'Pending', 'work complete · to invoice'),
-  ('i11', 'brigadier', 'mo', 'Annual 360 · FY27', 112000, null, null, 'Credit in advance', 'prepaid before EOFY')
-on conflict (id) do update set company_id = excluded.company_id, consultant_id = excluded.consultant_id, engagement = excluded.engagement, amount = excluded.amount, issued_date = excluded.issued_date, due_date = excluded.due_date, status = excluded.status, timing_label = excluded.timing_label;
-
--- FY26 annual invoices (Jul 2025 - Jun 2026), generated from lib/mock-data.ts monthlyInvoiceSeeds
 insert into public.invoices (id, company_id, consultant_id, engagement, amount, issued_date, due_date, status, timing_label) values
   ('fy26-inv-jul-1', 'coverdale', 'at', 'Leadership 360', 76000, '2025-07-05', '2025-07-25', 'Paid', 'paid 31 Jul · month 1'),
   ('fy26-inv-jul-2', 'harborline', 'dg', 'Culture sprint', 48000, '2025-07-14', '2025-07-28', 'Outstanding', 'due in 9d · month 1'),
@@ -244,18 +266,32 @@ insert into public.invoices (id, company_id, consultant_id, engagement, amount, 
   ('fy26-inv-may-1', 'raven', 'dg', 'Exec programme · M1', 85000, '2026-05-05', '2026-05-25', 'Outstanding', 'due in 16d · month 11'),
   ('fy26-inv-may-2', 'clearwater', 'ob', 'Workshop series', 38000, '2026-05-14', '2026-05-28', 'Overdue', '16d overdue · month 11'),
   ('fy26-inv-jun-1', 'meridian', 'dg', 'Mobilisation', 40000, '2026-06-05', '2026-06-25', 'Outstanding', 'due in 20d · month 12'),
-  ('fy26-inv-jun-2', 'harborline', 'mo', 'Mobilisation', 44000, null, null, 'Pending', 'work complete · to invoice · month 12')
+  ('fy26-inv-jun-2', 'harborline', 'mo', 'Mobilisation', 44000, null, null, 'Pending', 'work complete · to invoice · month 12'),
+  ('i1', 'northbridge', 'sc', 'Culture sprint', 96000, '2026-04-18', '2026-05-18', 'Overdue', '20d overdue'),
+  ('i2', 'catalyst', 'at', 'Leadership 360', 72000, '2026-04-26', '2026-05-26', 'Overdue', '12d overdue'),
+  ('i3', 'clearwater', 'ob', 'Workshop series', 38000, '2026-04-22', '2026-05-22', 'Overdue', '16d overdue'),
+  ('i4', 'kingsford', 'dg', 'Diagnostic phase', 48000, '2026-05-02', '2026-06-01', 'Overdue', '6d overdue'),
+  ('i5', 'pennifold', 'mo', 'Strategy offsite', 64000, '2026-05-10', '2026-06-09', 'Outstanding', 'due in 2d'),
+  ('i6', 'raven', 'dg', 'Exec programme · M1', 85000, '2026-05-24', '2026-06-23', 'Outstanding', 'due in 16d'),
+  ('i7', 'harborline', 'mo', 'Mobilisation', 44000, '2026-05-28', '2026-06-27', 'Outstanding', 'due in 20d'),
+  ('i8', 'meridian', 'dg', 'Mobilisation', 40000, '2026-05-28', '2026-06-27', 'Outstanding', 'due in 20d'),
+  ('i9', 'whitestone', 'sc', 'Leadership offsite', 42000, '2026-04-28', '2026-05-28', 'Paid', 'paid 26 May'),
+  ('i10', 'caversham', 'at', 'Phase 1 · complete', 52000, null, null, 'Pending', 'work complete · to invoice'),
+  ('i11', 'brigadier', 'mo', 'Annual 360 · FY27', 112000, null, null, 'Credit in advance', 'prepaid before EOFY')
 on conflict (id) do update set company_id = excluded.company_id, consultant_id = excluded.consultant_id, engagement = excluded.engagement, amount = excluded.amount, issued_date = excluded.issued_date, due_date = excluded.due_date, status = excluded.status, timing_label = excluded.timing_label;
 
 delete from public.job_change_alerts;
+
 insert into public.job_change_alerts (contact_name, previous_company, previous_role, new_company, new_role) values
   ('Rebecca Lawson', 'Brightford Holdings', 'Head of People', 'Meridian Capital Partners', 'Chief People Officer'),
   ('Daniel Okafor', 'Cordell Industrial', 'GM Operations', 'Harbour Bridge Ventures', 'Chief Operating Officer'),
   ('Sophie Nguyen', 'Foxford Mutual', 'L&D Manager', 'Apex Insurance Group', 'Head of Talent'),
   ('Marcus Bellamy', 'Lakeside Construction', 'Project Director', 'Stratton Tech Group', 'VP Delivery'),
-  ('Hannah Pereira', 'Norwood Retail Group', 'HR Business Partner', 'Clearwater Foods Australia', 'People & Culture Director');
+  ('Hannah Pereira', 'Norwood Retail Group', 'HR Business Partner', 'Clearwater Foods Australia', 'People & Culture Director')
+on conflict do nothing;
 
 insert into public.dashboard_seed_notes (note_key, note) values
-  ('scenario', 'Connected test data for Maximus dashboard prototype. HubSpot owns CRM/deals/marketing, Monday owns delivery, MYOB owns invoicing, Keep owns job-change alerts.'),
-  ('period', 'Scenario spans FY26 in full: 1 Jul 2025 to 30 Jun 2026, with Q4 FY26 (1 Apr - 30 Jun 2026) carrying the richest mockup-fidelity detail. Values are fictional but internally connected.')
+  ('scenario', 'Connected test data for Maximus dashboard prototype. HubSpot owns CRM/deals/marketing, Monday.com owns delivery, MYOB owns invoicing, Keep owns job-change alerts.'),
+  ('period', 'Scenario spans FY26 in full: 1 Jul 2025 to 30 Jun 2026, with Q4 FY26 (1 Apr - 30 Jun 2026) carrying the richest mockup-fidelity detail. Values are fictional but internally connected.'),
+  ('generator', 'This file is generated from lib/mock-data.ts so the local demo and Supabase seed stay aligned.')
 on conflict (note_key) do update set note = excluded.note;

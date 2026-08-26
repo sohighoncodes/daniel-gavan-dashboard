@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "supabase:init": "supabase init",
-    "supabase:link": "supabase link --project-ref zffesectcbxbndemgtwe"
+    "supabase:link": "supabase link --project-ref zffesectcbxbndemgtwe",
+    "supabase:seed:generate": "node --no-warnings --experimental-strip-types scripts/generate-supabase-seed.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.55.0",
